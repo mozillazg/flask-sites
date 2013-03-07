@@ -3,3 +3,5 @@ Jinja2>=2.6
 Werkzeug>=0.8.3
 Flask-WTF>=0.8.2
 SQLAlchemy>=0.8.0b2
+python-openid>=2.2.5
+Flask-OpenID>=1.1.1
