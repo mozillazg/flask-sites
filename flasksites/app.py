@@ -93,7 +93,8 @@ def add_site():
         source_url = request.form.get('source_url', '')
 
         g.db.execute('insert into site (title, url, description, '
-                     'source_url) values (?, ?, ?, ?)',
+                     'source_url, user_id, submit_at) values '
+                     '(?, ?, ?, ?, 1, "20130101 00:00")',
                      [title, url, description, source_url])
         g.db.commit()
         flash('New site was successfully added')
@@ -105,8 +106,8 @@ def add_site():
 @app.route('/')
 @app.route('/sites/')
 def show_sites():
-    cur = g.db.execute('select id, title, url, description, source_url from '
-                       'site order by id desc')
+    cur = g.db.execute('select id, title, url, description, source_url, '
+                       'user_id, submit_at from site order by id desc')
     sites = [dict(id=row[0], title=row[1], url=row[2], description=row[3],
              source_url=row[4]) for row in cur.fetchall()]
     return render_template('index.html', sites=sites)

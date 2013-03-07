@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Submit site :: {{ super() }}
+{% endblock %}
+
+
+{% block breadcrumb %}
+  <li><a href="index.html">Home</a><span class="divider">/</span></li>
+  <li class="active">Submit site</li>
+{% endblock %}
+
+
+{% block main %}
+<!--<div class="row">-->
+  <!--<div class="span8 offset2">-->
+    <form class="form-horizontal" action="" method="post">
+
+      <fieldset>
+        <legend>Base info</legend>
+        <div class="control-group">
+          <label class="control-label" for="site_title">Site title:</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="site_title" name="title">
+            <p class="help-block">title</p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="site_url">Site URL:</label>
+          <div class="controls">
+            <input type="url" class="input-xlarge" id="site_url" name="url">
+            <p class="help-block">URL</p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="site_description">Site Descritption:</label>
+          <div class="controls">
+            <textarea rows="3" id="site_description" class="input-xlarge"></textarea>
+            <p class="help-block">Descritption</p>
+          </div>
+        </div>
+        <!--</fieldset>-->
+      <!--<fieldset>-->
+        <!--<legend>Other info</legend>-->
+
+        <div class="form-actions">
+          <!--<button type="submit" class="btn btn-primary pull-right">Create a account</button>-->
+          <button type="submit" class="btn btn-primary">Submit an site</button>
+          <!--<button type="submit" class="btn">Cancel</button>-->
+        </div>
+      </fieldset>
+    </form>
+    <!--</div>-->
+
+  <!--</div>-->
+{% endblock %}
