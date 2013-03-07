@@ -109,7 +109,7 @@ def show_sites():
     cur = g.db.execute('select id, title, url, description, source_url, '
                        'user_id, submit_at from site order by id desc')
     sites = [dict(id=row[0], title=row[1], url=row[2], description=row[3],
-             source_url=row[4]) for row in cur.fetchall()]
+             source_url=row[4], submit_at=row[6]) for row in cur.fetchall()]
     return render_template('index.html', sites=sites)
 
 
