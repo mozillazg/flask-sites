@@ -21,22 +21,28 @@
         <div class="control-group">
           <label class="control-label" for="site_title">Site title:</label>
           <div class="controls">
-            <input type="text" class="input-xlarge" id="site_title" name="title">
+            <input type="text" class="input-xlarge" id="site_title" name="title" required="required">
             <p class="help-block">title</p>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="site_url">Site URL:</label>
           <div class="controls">
-            <input type="url" class="input-xlarge" id="site_url" name="url">
+            <input type="url" class="input-xlarge" id="site_url" name="url" required="required">
             <p class="help-block">URL</p>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="site_description">Site Descritption:</label>
           <div class="controls">
-            <textarea rows="3" id="site_description" class="input-xlarge"></textarea>
+            <textarea rows="3" id="site_description" class="input-xlarge" required="required"></textarea>
             <p class="help-block">Descritption</p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="site_tags">Site Tags:</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="site_tags" name="tags">
           </div>
         </div>
         <!--</fieldset>-->

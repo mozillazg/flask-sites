@@ -69,12 +69,16 @@ def register():
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['email'] != 'abc@abc.com':
-            error = 'Invalid email'
-        elif request.form['password'] != 'abc':
-            error = 'Invalid password'
+        email = request.form.get('email')
+        password = request.form.get('password')
+        cur = g.db.execute('select username, email from user where '
+                           'email=? and password=?', [email, password])
+        results = cur.fetchall()
+        if not any(results):
+            error = 'Invalid email or password'
         else:
             session['logged_in'] = True
+            session['username'] = results[0][0]
             flash('You were logged in')
             return redirect('/')
     return render_template('login.html', error=error)
@@ -91,6 +95,7 @@ def add_site():
         url = request.form.get('url', '')
         description = request.form.get('description', '')
         source_url = request.form.get('source_url', '')
+        tags = request.form.get('tags', '')
 
         g.db.execute('insert into site (title, url, description, '
                      'source_url, user_id, submit_at) values '

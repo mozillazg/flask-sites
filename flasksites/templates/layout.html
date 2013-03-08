@@ -39,6 +39,7 @@
           <ul class="nav pull-right">
           {% if session.logged_in %}
             <li><a href="{{ url_for('add_site') }}">Add Site</a></li>
+            <li><a href="#">{{ session.username }}</a><li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
           {% else %}
             <li><a href="{{ url_for('register') }}">Singup</a></li>

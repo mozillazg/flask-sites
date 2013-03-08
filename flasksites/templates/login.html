@@ -12,34 +12,38 @@
 
 
 {% block main %}
-  <div class="row">
-    <div class="span8 offset2">
-      <form class="form-horizontal" action="" method="post">
-        <fieldset>
-          <!--<legend>Login</legend>-->
-          <div class="control-group">
-            <label class="control-label" for="inputEmail">Email</label>
-            <div class="controls">
-              <input type="text" id="inputEmail" name="email" placeholder="Email">
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="inputPassword">Password</label>
-            <div class="controls">
-              <input type="password" id="inputPassword" name="password" placeholder="Password">
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <label class="checkbox">
-                <input type="checkbox" name="remeber"> Remember me
-              </label>
-              <button type="submit" class="btn btn-primary">Sign in</button>
-              <!--<button type="submit" class="btn">Sign in</button>-->
-            </div>
-          </div>
-        </fieldset>
-      </form>
+<form class="form-horizontal login" action="" method="post">
+  <fieldset>
+    <legend>Sign in</legend>
+    {% if error %}
+    <div class="alert alert-error">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ error }}
     </div>
-  </div>
+    {% endif %}
+    <div class="control-group">
+      <label class="control-label" for="inputEmail">Email</label>
+      <div class="controls">
+        <input type="text" id="inputEmail" name="email" placeholder="Email" required="required">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputPassword">Password</label>
+      <div class="controls">
+        <input type="password" id="inputPassword" name="password" placeholder="Password" required="required">
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox">
+          <input type="checkbox" name="remeber"> Remember me
+        </label>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Sign in</button>
+      <!--<button type="submit" class="btn">Sign in</button>-->
+    </div>
+  </fieldset>
+</form>
 {% endblock %}
