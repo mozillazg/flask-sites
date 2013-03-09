@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from contextlib import closing
 
-import sqlite3
-from flask import Flask
 from flask import request
 from flask import session
 from flask import g
@@ -14,35 +11,13 @@ from flask import abort
 from flask import render_template
 from flask import flash
 
-DATABASE = 'flasksites.db'
-DEBUG = True
-SECRET_KEY = '\xd5\xbdx\x0fw\x02\x0cb\x0f\xc8H\xf7QDm\xa9\xa8\x9a=r'
-USERNAME = 'admin'
-PASSWORD = 'admin'
-
-app = Flask(__name__)
-app.config.from_object(__name__)
-
-
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
+from settings import db
+from settings import app
+from models import User
 
 
 def init_db():
-    with closing(connect_db()) as db:
-        with app.open_resource('schema.sql') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
-
-
-@app.before_request
-def before_request():
-    g.db = connect_db()
-
-
-@app.teardown_request
-def teardown_request(exception):
-    g.db.close()
+    db.create_all()
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -56,9 +31,9 @@ def register():
         if password != confirm_password:
             error = 'confirm password'
         else:
-            g.db.execute('insert into user (username, email, password) values '
-                         '(?, ?, ?)', [username, email, password])
-            g.db.commit()
+            user = User(username, email, password)
+            db.session.add(user)
+            db.session.commit()
             flash('Signup successfully')
             return redirect(url_for('login'))
     else:
@@ -71,14 +46,12 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        cur = g.db.execute('select username, email from user where '
-                           'email=? and password=?', [email, password])
-        results = cur.fetchall()
-        if not any(results):
+        user = User.query.filter_by(email=email, password=password).first()
+        if user is None:
             error = 'Invalid email or password'
         else:
             session['logged_in'] = True
-            session['username'] = results[0][0]
+            session['username'] = user.username
             flash('You were logged in')
             return redirect('/')
     return render_template('login.html', error=error)
@@ -97,11 +70,6 @@ def add_site():
         source_url = request.form.get('source_url', '')
         tags = request.form.get('tags', '')
 
-        g.db.execute('insert into site (title, url, description, '
-                     'source_url, user_id, submit_at) values '
-                     '(?, ?, ?, ?, 1, "20130101 00:00")',
-                     [title, url, description, source_url])
-        g.db.commit()
         flash('New site was successfully added')
         return redirect(url_for('show_sites'))
     else:
@@ -111,10 +79,7 @@ def add_site():
 @app.route('/')
 @app.route('/sites/')
 def show_sites():
-    cur = g.db.execute('select id, title, url, description, source_url, '
-                       'user_id, submit_at from site order by id desc')
-    sites = [dict(id=row[0], title=row[1], url=row[2], description=row[3],
-             source_url=row[4], submit_at=row[6]) for row in cur.fetchall()]
+    sites = []
     return render_template('index.html', sites=sites)
 
 
@@ -123,10 +88,7 @@ def show_mine_sites():
     if not session.get('logged_in'):
         abort(401)
 
-    cur = g.db.execute('select id, title, url, description, source_url from '
-                       'site order by id desc')
-    sites = [dict(id=row[0], title=row[1], url=row[2], description=row[3],
-             source_url=row[4]) for row in cur.fetchall()]
+    sites = []
     return render_template('show_sites.html', sites=sites)
 
 
@@ -135,22 +97,13 @@ def search_sites():
     keyword = request.args.get('q')
     if not keyword:
         return redirect('/')
-    cur = g.db.execute('select id, title, url, description, source_url from '
-                       'site where title like "%?%" or description like '
-                       '"%?%" order by id desc', [keyword, keyword])
-    sites = [dict(id=row[0], title=row[1], url=row[2], description=row[3],
-             source_url=row[4]) for row in cur.fetchall()]
+    sites = []
     return render_template('show_sites.html', sites=sites, keyword=keyword)
 
 
 @app.route('/site/<int:site_id>')
 def show_site(site_id):
-    cur = g.db.execute('select title, url, description, source_url from '
-                       'site where id=?', [site_id])
-    site = [dict(title=row[0], url=row[1], description=row[2],
-            source_url=row[3]) for row in cur.fetchall()]
-    if site:
-        site = site[0]
+    sites = []
     return render_template('site.html', site=site)
 
 
