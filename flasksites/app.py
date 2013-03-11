@@ -14,10 +14,7 @@ from flask import flash
 from settings import db
 from settings import app
 from models import User
-
-
-def init_db():
-    db.create_all()
+from models import Site
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -79,7 +76,7 @@ def add_site():
 @app.route('/')
 @app.route('/sites/')
 def show_sites():
-    sites = []
+    sites = Site.query.all()
     return render_template('index.html', sites=sites)
 
 
@@ -103,7 +100,7 @@ def search_sites():
 
 @app.route('/site/<int:site_id>')
 def show_site(site_id):
-    sites = []
+    site = Site.query.filter_by(id=site_id).first()
     return render_template('site.html', site=site)
 
 
