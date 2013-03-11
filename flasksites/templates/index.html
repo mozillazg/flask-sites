@@ -17,7 +17,7 @@
         <li class="span6">
           <div class="thumbnail">
             <h5>{{ site.title }}</h5>
-            <a href="{{ site.url }}" class="">
+            <a href="{{ url_for('show_site', site_id=site.id) }}" class="">
               <img src="" data-src="holder.js/320x240">
             </a>
             <p>{{ site.submit_at }}</p>

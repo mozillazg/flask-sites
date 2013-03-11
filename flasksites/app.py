@@ -15,6 +15,7 @@ from settings import db
 from settings import app
 from models import User
 from models import Site
+from utils import get_or_create_tag
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -62,10 +63,19 @@ def add_site():
     error = None
     if request.method == 'POST':
         title = request.form.get('title', '')
-        url = request.form.get('url', '')
+        website = request.form.get('url', '')
         description = request.form.get('description', '')
         source_url = request.form.get('source_url', '')
-        tags = request.form.get('tags', '')
+        tags_names = request.form.get('tags', '').split(',')
+        tags_names = filter(lambda s: s, [tag.strip() for tag in tags_names])
+
+        # Add site info to db
+        site = Site(title=title, website=website, description=description,
+                    source_url=source_url)
+        for tag in map(get_or_create_tag, tags_names):
+            site.tags.append(tag)
+        db.session.add(site)
+        db.session.commit()
 
         flash('New site was successfully added')
         return redirect(url_for('show_sites'))
@@ -101,7 +111,7 @@ def search_sites():
 @app.route('/site/<int:site_id>')
 def show_site(site_id):
     site = Site.query.filter_by(id=site_id).first()
-    return render_template('site.html', site=site)
+    return render_template('detail.html', site=site)
 
 
 @app.route('/logout')
