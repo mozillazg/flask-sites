@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+
+{% block breadcrumb %}
+    <li><a href="/">Home</a><span class="divider">/</span></li>
+    <li class="active">{{ site.website }}</li>
+{% endblock %}
+
+{% block main %}
+<div class="row">
+  <div class="span9">
+    <ul class="unstyled">
+      <li><h1>title</h1></li>
+      <li>
+        <a href="{{ site.website }}" class="thumbnail">
+          <img src="" data-src="holder.js/500x400">
+        </a>
+      </li>
+      <li>URL: <a href="{{ site.website }}">{{ site.website }}</a></li>
+      <li>Description:
+        <p>{{ site.description }}</p>
+      </li>
+      <li>Tags:
+        {% for tag in site.tags %}
+          {{ tag.name }}
+        {% endfor %}
+      </li>
+      <li>Source Code: <a href="{{ site.source_url }}">{{ site.source_url }}</a></li>
+    </ul>
+  </div>
+
+  <div class="span3">
+    <ul class="unstyled">
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+      <li class="pull-left span3"><a href="#">tag</a></li>
+    </ul>
+  </div>
+
+</div>
+{% endblock %}
