@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block title %}
+{{ site.title }} :: {{ super() }}
+{% endblock %}
+
 
 {% block breadcrumb %}
     <li><a href="/">Home</a><span class="divider">/</span></li>
@@ -10,43 +14,44 @@
 <div class="row">
   <div class="span9">
     <ul class="unstyled">
-      <li><h1>title</h1></li>
-      <li>
-        <a href="{{ site.website }}" class="thumbnail">
+      <li><h1>{{ site.title }}</h1></li>
+      <li><p class="lead">{{ site.description }}</p></li>
+      <li><p><a href="{{ site.website }}" class="thumbnail">
           <img src="" data-src="holder.js/500x400">
-        </a>
-      </li>
-      <li>URL: <a href="{{ site.website }}">{{ site.website }}</a></li>
-      <li>Description:
-        <p>{{ site.description }}</p>
-      </li>
-      <li>Tags:
-        {% for tag in site.tags %}
-          {{ tag.name }}
-        {% endfor %}
-      </li>
-      <li>Source Code: <a href="{{ site.source_url }}">{{ site.source_url }}</a></li>
+        </a></p></li>
+
+      <div class="clearfix"></div>
+      <div class="well">
+        <li>URL: <a href="{{ site.website }}">{{ site.website }}</a></li>
+        <li>Tags:
+          {% for tag in site.tags %}
+          <a href="{{ url_for('tagged', tag_name=tag.name) }}">{{ tag.name }}</a>
+          {% endfor %}
+        </li>
+        <li>Source Code: <a href="{{ site.source_url }}">{{ site.source_url }}</a></li>
+        <li>Submited by: {{ site.create_by.username }} at {{ site.create_at }}</li>
+      </div>
     </ul>
   </div>
 
   <div class="span3">
-    <ul class="unstyled">
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
-      <li class="pull-left span3"><a href="#">tag</a></li>
+    <ul class="inline">
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
     </ul>
   </div>
 

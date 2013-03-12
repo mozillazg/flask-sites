@@ -10,11 +10,13 @@ from flask import url_for
 from flask import abort
 from flask import render_template
 from flask import flash
+from sqlalchemy import or_
 
 from settings import db
 from settings import app
 from models import User
 from models import Site
+from models import Tag
 from utils import get_or_create_tag
 
 
@@ -49,7 +51,7 @@ def login():
             error = 'Invalid email or password'
         else:
             session['logged_in'] = True
-            session['username'] = user.username
+            session['user'] = user
             flash('You were logged in')
             return redirect('/')
     return render_template('login.html', error=error)
@@ -71,7 +73,7 @@ def add_site():
 
         # Add site info to db
         site = Site(title=title, website=website, description=description,
-                    source_url=source_url)
+                    source_url=source_url, create_by=session['user'])
         for tag in map(get_or_create_tag, tags_names):
             site.tags.append(tag)
         db.session.add(site)
@@ -85,27 +87,46 @@ def add_site():
 
 @app.route('/')
 @app.route('/sites/')
-def show_sites():
-    sites = Site.query.all()
+def all_sites(mine=False, keyword=None, tag_name=None):
+    sites = None
+    if mine:
+        query = Site.query.filter_by(create_by=session['user'])
+    elif keyword:
+        query = Site.query.filter(or_(Site.title.like('%%%s%%') % keyword,
+                                      Site.description.like('%%%s%%') % keyword
+                                      ))
+    elif tag_name:
+        tag = Tag.query.filter_by(name=tag_name).first()
+        sites = tag.sites
+    else:
+        query = Site.query
+
+    if sites is None:
+        sites = query.order_by(Site.create_at.desc()).all()
+
     return render_template('index.html', sites=sites)
 
 
-@app.route('/sites/mine/')
-def show_mine_sites():
+@app.route('/mine/')
+def mine():
     if not session.get('logged_in'):
         abort(401)
+    else:
+        return all_sites(mine=True)
 
-    sites = []
-    return render_template('show_sites.html', sites=sites)
 
-
-@app.route('/sites/search/')
-def search_sites():
+@app.route('/search/')
+def search():
     keyword = request.args.get('q')
     if not keyword:
         return redirect('/')
-    sites = []
-    return render_template('show_sites.html', sites=sites, keyword=keyword)
+    else:
+        return all_sites(keyword=keyword)
+
+
+@app.route('/tagged/<tag_name>/')
+def tagged(tag_name):
+    return all_sites(tag_name=tag_name)
 
 
 @app.route('/site/<int:site_id>')
@@ -117,6 +138,7 @@ def show_site(site_id):
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
+    session.pop('user', None)
     flash('You were logged out')
     return redirect(url_for('show_sites'))
 
