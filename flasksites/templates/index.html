@@ -10,15 +10,15 @@
 
 
 {% block main %}
-  <div class="row-fluid">
-    <div class="span9">
+  <div class="row">
+    <div class="span10">
       <ul class="thumbnails">
       {% for site in sites %}
-        <li class="span6">
+        <li class="span5">
           <div class="thumbnail">
             <h5>{{ site.title }}</h5>
             <a href="{{ url_for('show_site', site_id=site.id) }}" class="">
-              <img src="" data-src="holder.js/320x240">
+              <img src="" data-src="holder.js/350x240">
             </a>
             <p>{{ site.submitted_at }}</p>
           </div>
@@ -42,26 +42,26 @@
       </div>
     </div>
 
-    <div class="span3">
-      <ul class="unstyled">
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-        <li class="pull-left span3"><a href="#">tag</a></li>
-      </ul>
-    </div>
+  <div class="span2">
+    <ul class="inline">
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+      <li><a href="#">tag</a></li>
+    </ul>
+  </div>
 
   </div>
 {% endblock %}

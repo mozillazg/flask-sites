@@ -27,8 +27,9 @@
 
           <a class="brand" href="/">FlaskSites</a>
           <ul class="nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="">Sites with Source</a></li>
+            <li {% if request.path == '/' %}class="active" {% endif %}><a href="/">Home</a></li>
+            <li {% if request.path == url_for('all_tags') %}class="active" {% endif %}><a href="{{ url_for('all_tags') }}">Tags</a></li>
+            <li {% if request.path == '' %}class="active" {% endif %}><a href="">OpenSource</a></li>
             <li><a href="">About</a><li>
             <li>
               <form class="navbar-search pull-left" action="" method="get">
@@ -38,8 +39,9 @@
           </ul>
           <ul class="nav pull-right">
           {% if session.logged_in %}
-            <li><a href="{{ url_for('add_site') }}">Add Site</a></li>
-            <li><a href="#">{{ session.username }}</a><li>
+            <li><a href="{{ url_for('add_site') }}">Submit</a></li>
+            <li><a href="{{ url_for('mine') }}">By you</a></li>
+            <li><a href="#">{# session.user.username #}</a><li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
           {% else %}
             <li><a href="{{ url_for('register') }}">Singup</a></li>

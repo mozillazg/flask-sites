@@ -73,14 +73,14 @@ def add_site():
 
         # Add site info to db
         site = Site(title=title, website=website, description=description,
-                    source_url=source_url, create_by=session['user'])
+                    source_url=source_url, submitted_by=session['user'])
         for tag in map(get_or_create_tag, tags_names):
             site.tags.append(tag)
         db.session.add(site)
         db.session.commit()
 
         flash('New site was successfully added')
-        return redirect(url_for('show_sites'))
+        return redirect('/')
     else:
         return render_template('add_site.html', error=None)
 
@@ -106,7 +106,7 @@ def all_sites(mine=False, username=None, keyword=None, tag_name=None):
         query = Site.query
 
     if sites is None:
-        sites = query.order_by(Site.created_at.desc()).all()
+        sites = query.order_by(Site.submitted_at.desc()).all()
 
     return render_template('index.html', sites=sites)
 
@@ -144,12 +144,18 @@ def show_site(site_id):
     return render_template('detail.html', site=site)
 
 
+@app.route('/tags')
+def all_tags():
+    tags = Tag.query.all()
+    return render_template('tags.html', tags=tags)
+
+
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     session.pop('user', None)
     flash('You were logged out')
-    return redirect(url_for('show_sites'))
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run()

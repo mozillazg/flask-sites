@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+
+{% block main %}
+<div class="container">
+  <ul class="inline">
+    {% for tag in tags %}
+    <li><a href="{{ url_for('tagged', tag_name=tag.name) }}">{{ tag.name }}</a></li>
+    {% endfor %}
+  </ul>
+
+</div>
+{% endblock %}
