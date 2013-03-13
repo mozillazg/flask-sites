@@ -12,8 +12,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
-    sites = db.relationship('Site', backref='create_by', lazy='dynamic')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    sites = db.relationship('Site', backref='submitted_by', lazy='dynamic')
 
     def __init__(self, username, email, password):
         self.username = username
@@ -40,8 +40,8 @@ class Site(db.Model):
                            lazy='dynamic'))
     source_url = db.Column(db.String(500))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at = db.Column(db.DateTime, default=datetime.utcnow,
+    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow,
                           onupdate=datetime.utcnow)
     # slug = db.Column(db.String(260), unique=True, nullable=False)
 
@@ -51,7 +51,7 @@ class Site(db.Model):
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), unique=True, nullable=False)
 
     def __repr__(self):
         return '<Tag %r>' % self.name

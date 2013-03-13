@@ -87,10 +87,14 @@ def add_site():
 
 @app.route('/')
 @app.route('/sites/')
-def all_sites(mine=False, keyword=None, tag_name=None):
+def all_sites(mine=False, username=None, keyword=None, tag_name=None):
     sites = None
+
     if mine:
-        query = Site.query.filter_by(create_by=session['user'])
+        query = Site.query.filter_by(submitted_by=session['user'])
+    elif username:
+        author = User.query.filter_by(username=username).first()
+        sites = author.sites
     elif keyword:
         query = Site.query.filter(or_(Site.title.like('%%%s%%') % keyword,
                                       Site.description.like('%%%s%%') % keyword
@@ -102,7 +106,7 @@ def all_sites(mine=False, keyword=None, tag_name=None):
         query = Site.query
 
     if sites is None:
-        sites = query.order_by(Site.create_at.desc()).all()
+        sites = query.order_by(Site.created_at.desc()).all()
 
     return render_template('index.html', sites=sites)
 
@@ -127,6 +131,11 @@ def search():
 @app.route('/tagged/<tag_name>/')
 def tagged(tag_name):
     return all_sites(tag_name=tag_name)
+
+
+@app.route('/by/<username>/')
+def submited_by(username):
+    return all_sites(username=username)
 
 
 @app.route('/site/<int:site_id>')
