@@ -29,7 +29,7 @@
           <ul class="nav">
             <li {% if request.path == '/' %}class="active" {% endif %}><a href="/">Home</a></li>
             <li {% if request.path == url_for('all_tags') %}class="active" {% endif %}><a href="{{ url_for('all_tags') }}">Tags</a></li>
-            <li {% if request.path == '' %}class="active" {% endif %}><a href="">OpenSource</a></li>
+            <li {% if request.path == url_for('opensource') %}class="active" {% endif %}><a href="{{ url_for('opensource') }}"">OpenSource</a></li>
             <li><a href="">About</a><li>
             <li>
               <form class="navbar-search pull-left" action="" method="get">

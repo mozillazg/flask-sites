@@ -87,7 +87,8 @@ def add_site():
 
 @app.route('/')
 @app.route('/sites/')
-def all_sites(mine=False, username=None, keyword=None, tag_name=None):
+def all_sites(mine=False, username=None, keyword=None,
+              tag_name=None, opensource=False):
     sites = None
 
     if mine:
@@ -102,6 +103,8 @@ def all_sites(mine=False, username=None, keyword=None, tag_name=None):
     elif tag_name:
         tag = Tag.query.filter_by(name=tag_name).first()
         sites = tag.sites
+    elif opensource:
+        query = Site.query.filter(Site.source_url != '')
     else:
         query = Site.query
 
@@ -136,6 +139,11 @@ def tagged(tag_name):
 @app.route('/by/<username>/')
 def submited_by(username):
     return all_sites(username=username)
+
+
+@app.route('/opensource/')
+def opensource():
+    return all_sites(opensource=True)
 
 
 @app.route('/site/<int:site_id>')
