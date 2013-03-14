@@ -13,7 +13,7 @@
   <div class="row">
     <div class="span10">
       <ul class="thumbnails">
-      {% for site in sites %}
+      {% for site in sites.items %}
         <li class="span5">
           <div class="thumbnail">
             <h5>{{ site.title }}</h5>
@@ -26,20 +26,6 @@
       {% endfor %}
       </ul>
 
-      <div class="pagination">
-        <ul>
-          <li class="disabled"><a href=""#>«</a></li>
-          <li class="active"><a href=""#>1</a></li>
-          <li><a href=""#>2</a></li>
-          <li><a href=""#>3</a></li>
-          <li><a href=""#>4</a></li>
-          <li><a href=""#>5</a></li>
-          <li><a href=""#>6</a></li>
-          <li><a href=""#>7</a></li>
-          <li><a href=""#>8</a></li>
-          <li><a href="#">»</a></li>
-        </ul>
-      </div>
     </div>
 
   <div class="span2">

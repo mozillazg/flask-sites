@@ -10,6 +10,7 @@ from flask import url_for
 from flask import abort
 from flask import render_template
 from flask import flash
+from flask.ext.paginate import Pagination
 from sqlalchemy import or_
 
 from settings import db
@@ -90,6 +91,10 @@ def add_site():
 def all_sites(mine=False, username=None, keyword=None,
               tag_name=None, opensource=False):
     sites = None
+    try:
+        page = int(request.args.get('page', 1))
+    except TypeError:
+        page = 1
 
     if mine:
         query = Site.query.filter_by(submitted_by=session['user'])
@@ -109,7 +114,9 @@ def all_sites(mine=False, username=None, keyword=None,
         query = Site.query
 
     if sites is None:
-        sites = query.order_by(Site.submitted_at.desc()).all()
+        sites = query.order_by(Site.submitted_at.desc())
+
+    sites = sites.paginate(page, per_page=2)
 
     return render_template('index.html', sites=sites)
 
