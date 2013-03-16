@@ -80,7 +80,7 @@ def add_site():
         db.session.add(site)
         db.session.commit()
 
-        flash('New site was successfully added')
+        flash('New site was successfully added!')
         return redirect('/')
     else:
         return render_template('add_site.html', error=None)
@@ -93,7 +93,7 @@ def all_sites(mine=False, username=None, keyword=None,
     sites = None
     try:
         page = int(request.args.get('page', 1))
-    except TypeError:
+    except ValueError:
         page = 1
 
     if mine:
@@ -116,9 +116,10 @@ def all_sites(mine=False, username=None, keyword=None,
     if sites is None:
         sites = query.order_by(Site.submitted_at.desc())
 
-    sites = sites.paginate(page, per_page=2)
+    pagination = Pagination(page=page, total=sites.count(), per_page=2)
+    sites = sites.paginate(page, per_page=2, error_out=False)
 
-    return render_template('index.html', sites=sites)
+    return render_template('index.html', sites=sites, pagination=pagination)
 
 
 @app.route('/mine/')
@@ -163,6 +164,29 @@ def show_site(site_id):
 def all_tags():
     tags = Tag.query.all()
     return render_template('tags.html', tags=tags)
+
+
+@app.route('/account')
+def account():
+    user = session.get('user')
+    return render_template('account.html', user)
+
+
+@app.route('/account/settings')
+def preference():
+    user = session.get('user')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+
+    if not all((email, password)):
+        flash('error')
+    elif confirm_password != password:
+        flash('error')
+    else:
+        user.email = email
+        user.password = password
+        db.commit()
 
 
 @app.route('/logout')
