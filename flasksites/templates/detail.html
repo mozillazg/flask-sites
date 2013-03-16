@@ -29,7 +29,7 @@
           {% endfor %}
         </li>
         <li>Source Code: <a href="{{ site.source_url }}">{{ site.source_url }}</a></li>
-        <li>Submitted by: {{ site.submitted_by.username }} at {{ site.submitted_at }}</li>
+        <li>Submitted by: <a href="{{ url_for('submitted_by', username=site.submitted_by.username)}}">{{ site.submitted_by.username }}</a> at {{ site.submitted_at }}</li>
       </div>
     </ul>
   </div>

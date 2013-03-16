@@ -145,7 +145,7 @@ def tagged(tag_name):
 
 
 @app.route('/by/<username>/')
-def submited_by(username):
+def submitted_by(username):
     return all_sites(username=username)
 
 
