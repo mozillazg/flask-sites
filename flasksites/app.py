@@ -20,8 +20,10 @@ from models import Site
 from models import Tag
 from utils import get_or_create_tag
 from utils import thumbnail_filter
+from utils import shorter_url_filter
 
 app.jinja_env.filters['thumbnail'] = thumbnail_filter
+app.jinja_env.filters['shorter_url'] = shorter_url_filter
 
 
 @app.route('/account/register', methods=['GET', 'POST'])

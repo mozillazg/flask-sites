@@ -22,3 +22,8 @@ def thumbnail_filter(url, width=1024, height=768, selector='body'):
     api = 'http://screamshot-demo.3sd.me/capture/?url=%s'
     api += '&width=%s&height=%s&selector=%s'
     return api % (url, width, height, selector)
+
+
+def shorter_url_filter(url):
+    url = url.strip('http://').strip('https://')
+    return url

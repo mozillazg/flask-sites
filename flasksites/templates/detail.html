@@ -7,7 +7,7 @@
 
 {% block breadcrumb %}
     <li><a href="/">Home</a><span class="divider">/</span></li>
-    <li class="active">{{ site.website }}</li>
+    <li class="active">{{ site.website|shorter_url }}</li>
 {% endblock %}
 
 {% block main %}
