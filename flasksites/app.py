@@ -21,7 +21,7 @@ from models import Tag
 from utils import get_or_create_tag
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/account/register', methods=['GET', 'POST'])
 def register():
     error = None
     if request.method == 'POST':
@@ -41,7 +41,7 @@ def register():
         return render_template('register.html', error=error)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/account/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -166,30 +166,39 @@ def all_tags():
     return render_template('tags.html', tags=tags)
 
 
-@app.route('/account')
-def account():
-    user = session.get('user')
-    return render_template('account.html', user)
-
-
-@app.route('/account/settings')
+# @app.route('/account')
+# def account():
+    # user = session.get('user')
+    # return render_template('account.html', user)
+@app.route('/account/settings', methods=['GET', 'POST'])
 def preference():
+    if not session.get('logged_in'):
+        abort(401)
     user = session.get('user')
-    email = request.form.get('email')
-    password = request.form.get('password')
-    confirm_password = request.form.get('confirm_password')
 
-    if not all((email, password)):
-        flash('error')
-    elif confirm_password != password:
-        flash('error')
-    else:
-        user.email = email
-        user.password = password
-        db.commit()
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+
+        if not all((email, password)):
+            flash('error')
+        elif confirm_password and confirm_password != password:
+            flash('error')
+        else:
+            if email != user.email:
+                if User.filter_by(email=email).first() is not None:
+                    flash('error')
+                else:
+                    user.email = email
+            user.password = password
+            db.session.add(user)
+            db.session.commit()
+            flash('Update successfully!')
+    return render_template('settings.html', user=user)
 
 
-@app.route('/logout')
+@app.route('/account/logout')
 def logout():
     session.pop('logged_in', None)
     session.pop('user', None)
