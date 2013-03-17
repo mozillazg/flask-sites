@@ -27,3 +27,7 @@ def thumbnail_filter(url, width=1024, height=768, selector='body'):
 def shorter_url_filter(url):
     url = url.strip('http://').strip('https://')
     return url
+
+
+def format_datetime_filter(value, format='%b %d, %Y'):
+    return value.strftime(format)

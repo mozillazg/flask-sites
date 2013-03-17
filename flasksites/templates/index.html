@@ -20,7 +20,7 @@
             <a href="{{ url_for('show_site', site_id=site.id) }}" class="">
               <img src="{{ site.website|thumbnail }}" data-src="holder.js/350x240">
             </a>
-            <p>{{ site.submitted_at }}</p>
+            <p>{{ site.submitted_at|format_datetime }}</p>
           </div>
         </li>
       {% endfor %}
