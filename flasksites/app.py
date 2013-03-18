@@ -98,6 +98,8 @@ def add_site():
 def all_sites(mine=False, username=None, keyword=None,
               tag_name=None, opensource=False):
     sites = None
+    count = 0
+
     try:
         page = int(request.args.get('page', 1))
     except ValueError:
@@ -109,9 +111,25 @@ def all_sites(mine=False, username=None, keyword=None,
         author = User.query.filter_by(username=username).first()
         sites = author.sites
     elif keyword:
-        query = Site.query.filter(or_(Site.title.like('%%%s%%') % keyword,
-                                      Site.description.like('%%%s%%') % keyword
+        tags = Tag.query.filter(Tag.name.like('%' + keyword + '%')).all()
+
+        # http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg18662.html
+        query = Site.query.filter(or_(Site.title.like('%' + keyword + '%'),
+                                      Site.description.like('%' + keyword
+                                      + '%'),
+                                      Site.tags.any(Tag.id.in_(
+                                                    [tag.id for tag in tags]
+                                                    ))
                                       ))
+        # query2 = Site.query.join(Site.tags)\
+                     # .filter(Tag.id.in_([tag.id for tag in tags]))
+
+        # site1 = query.order_by(Site.submitted_at.desc())
+        # site2 = query2.order_by(Site.submitted_at.desc())
+        # sites = site1 + site2
+        # count = len(sites)
+
+        # print sites
     elif tag_name:
         tag = Tag.query.filter_by(name=tag_name).first()
         sites = tag.sites
