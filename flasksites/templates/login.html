@@ -1,48 +1,58 @@
 {% extends "layout.html" %}
 
 {% block title %}
-  Sign in :: {{ super() }}
+  Sign In :: {{ super() }}
 {% endblock %}
 
 
 {% block breadcrumb %}
-  <li><a href="/">Home</a><span class="divider">/</span></li>
-  <li class="active">Sign in</li>
+  <li><a href="/">Home</a><span class="divider">/</span></li><li class="active">Sign In</li>
 {% endblock %}
 
-
-{% block main %}
-<form class="form-horizontal login" action="" method="post">
-  <fieldset>
-    <legend>Sign in</legend>
-    {% if error %}
+{% block alert %}
+  {% if error %}
     <div class="alert alert-error">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       {{ error }}
     </div>
-    {% endif %}
-    <div class="control-group">
-      <label class="control-label" for="inputEmail">Email</label>
-      <div class="controls">
-        <input type="text" id="inputEmail" name="email" placeholder="Email" required="required">
+  {% endif %}
+{% endblock %}
+
+{% block main %}
+<form class="form-horizontal login" action="" method="post">
+  <fieldset>
+    <legend>Sign In</legend>
+
+    <div class="row">
+      <div class="span8 offset2">
+        <div class="control-group">
+          <label class="control-label" for="inputEmail">Email</label>
+          <div class="controls">
+            <input type="email" id="inputEmail" name="email" placeholder="Email" required="required">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">Password</label>
+          <div class="controls">
+            <input type="password" id="inputPassword" name="password" placeholder="Password" required="required">
+          </div>
+        </div>
+        <!--<div class="control-group">-->
+          <!--<div class="controls">-->
+            <!--<label class="checkbox">-->
+              <!--<input type="checkbox" name="remeber"> Remember me-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
-    <div class="control-group">
-      <label class="control-label" for="inputPassword">Password</label>
-      <div class="controls">
-        <input type="password" id="inputPassword" name="password" placeholder="Password" required="required">
-      </div>
-    </div>
-    <div class="control-group">
-      <div class="controls">
-        <label class="checkbox">
-          <input type="checkbox" name="remeber"> Remember me
-        </label>
-      </div>
-    </div>
+
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Sign in</button>
-      <!--<button type="submit" class="btn">Sign in</button>-->
+      <div class="row">
+        <div class="span6 offset2">
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+      </div>
     </div>
   </fieldset>
 </form>

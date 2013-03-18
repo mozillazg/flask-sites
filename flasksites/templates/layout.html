@@ -16,12 +16,18 @@
         //border: solid #EEE 1px;
         //padding-top: 20px;
       }
+      .span12 .thumbnails .span4 {
+        min-width: 300px;
+        max-width: 300px;
+        min-height: 300px;
+        max-height: 300px;
+      }
     </style>
   </head>
   <body style="padding-top:60px;" data-offset="50">
 
     <!-- navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <header class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
 
@@ -32,7 +38,7 @@
             <li><a href="">About</a><li>
             <li>
               <form class="navbar-search pull-left" action="{{ url_for('search') }}" method="get">
-                <input placeholder="Search Sites" name="q" type="text" class="search-query">
+                <input placeholder="Search Sites" name="q" type="text" class="search-query" {% if keyword %}value="{{ keyword}}"{% endif %}>
               </form>
             </li>
           </ul>
@@ -41,29 +47,28 @@
             <li><a href="{{ url_for('add_site') }}">Submit</a></li>
             <li><a href="{{ url_for('mine') }}">{{ session.user.username }}</a></li>
             <li><a href="{{ url_for('preference') }}">Perference</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
           {% else %}
-            <li><a href="{{ url_for('register') }}">Singup</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Create Account</a></li>
+            <li><a href="{{ url_for('login') }}">Sign In</a></li>
           {% endif %}
           </ul>
 
         </div>
       </div>
-    </div>
+    </header>
     <!-- end navbar -->
 
     <!-- main -->
     <div class="container">
 
       <ul class="breadcrumb ">
-    {% block breadcrumb %}
-        <!--<li><a href="index.html">Home</a><span class="divider">/</span></li>-->
+      {% block breadcrumb %}
         <li class="active">Home</li>
-    {% endblock %}
+      {% endblock %}
       </ul>
 
-    {% block notice%}
+    {% block alert %}
     {% endblock %}
 
       <div id="main" class="container">
@@ -73,20 +78,25 @@
 
     </div>
 
-    <footer class="footer container">
-      <!--<div class="row">-->
-        <!--<div class="span12">-->
-        <!--footer-->
-        <!--</div>-->
-      <!--</div>-->
-    {% block footer %}
-    {% endblock %}
-    </footer>
 
   {% block js %}
     <script src="/static/js/jquery-1.9.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/holder.js"></script>
   {% endblock %}
+
+
+  <div class="clearfix"></div>
+  <footer class="footer">
+  {% block footer %}
+    <div class="container">
+      <ul class="inline">
+        <li>About</li>
+        <li><a href="https://github.com/mozillazg/flask-sites">Source Code</a></li>
+      </ul>
+    </div>
+  {% endblock %}
+  </footer>
+
   </body>
 </html>

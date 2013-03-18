@@ -11,10 +11,10 @@
 
 {% block main %}
   <div class="row">
-    <div class="span10">
+    <div class="span12">
       <ul class="thumbnails">
       {% for site in sites.items %}
-        <li class="span5">
+        <li class="span4">
           <div class="thumbnail">
             <h5>{{ site.title }}</h5>
             <a href="{{ url_for('show_site', site_id=site.id) }}" class="">
@@ -29,26 +29,26 @@
 
     </div>
 
-  <div class="span2">
-    <ul class="inline">
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-    </ul>
-  </div>
+  <!--<div class="span2">-->
+    <!--<ul class="inline">-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+    <!--</ul>-->
+  <!--</div>-->
 
   </div>
 {% endblock %}

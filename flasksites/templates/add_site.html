@@ -6,57 +6,60 @@
 
 
 {% block breadcrumb %}
-  <li><a href="index.html">Home</a><span class="divider">/</span></li>
-  <li class="active">Submit site</li>
+  <li><a href="index.html">Home</a><span class="divider">/</span></li><li class="active">Submit site</li>
 {% endblock %}
 
 
 {% block main %}
-<!--<div class="row">-->
-  <!--<div class="span8 offset2">-->
     <form class="form-horizontal" action="" method="post">
 
       <fieldset>
         <legend>Base info</legend>
+<div class="row">
+  <div class="span8 offset2">
         <div class="control-group">
           <label class="control-label" for="site_title">Site title:</label>
           <div class="controls">
             <input type="text" class="input-xlarge" id="site_title" name="title" required="required">
-            <p class="help-block">title</p>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="site_url">Site URL:</label>
           <div class="controls">
             <input type="url" class="input-xlarge" id="site_url" name="url" required="required">
-            <p class="help-block">URL</p>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="site_description">Site Description:</label>
           <div class="controls">
             <textarea rows="3" id="site_description" class="input-xlarge" required="required" name="description"></textarea>
-            <p class="help-block">Description</p>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="site_tags">Site Tags:</label>
           <div class="controls">
             <input type="text" class="input-xlarge" id="site_tags" name="tags">
+            <p class="help-block">Separate tags with comma</p>
           </div>
         </div>
+      </div>
+    </div>
         <!--</fieldset>-->
       <!--<fieldset>-->
         <!--<legend>Other info</legend>-->
 
         <div class="form-actions">
+      <div class="row">
+        <div class="span6 offset2">
           <!--<button type="submit" class="btn btn-primary pull-right">Create a account</button>-->
           <button type="submit" class="btn btn-primary">Submit an site</button>
           <!--<button type="submit" class="btn">Cancel</button>-->
         </div>
+      </div>
+    </div>
       </fieldset>
     </form>
-    <!--</div>-->
+    </div>
 
-  <!--</div>-->
+  </div>
 {% endblock %}

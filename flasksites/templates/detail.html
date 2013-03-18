@@ -6,8 +6,7 @@
 
 
 {% block breadcrumb %}
-    <li><a href="/">Home</a><span class="divider">/</span></li>
-    <li class="active">{{ site.website|shorter_url }}</li>
+    <li><a href="/">Home</a><span class="divider">/</span></li><li class="active">{{ site.website|shorter_url }}</li>
 {% endblock %}
 
 {% block main %}
@@ -22,38 +21,38 @@
 
       <div class="clearfix"></div>
       <div class="well">
-        <li>URL: <a href="{{ site.website }}">{{ site.website }}</a></li>
+        <li>URL: {{ site.website|urlize }}</li>
         <li>Tags:
           {% for tag in site.tags %}
           <a href="{{ url_for('tagged', tag_name=tag.name) }}">{{ tag.name }}</a>
           {% endfor %}
         </li>
-        <li>Source Code: <a href="{{ site.source_url }}">{{ site.source_url }}</a></li>
+        <li>Source Code: {{ site.source_url|urlize }}</li>
         <li>Submitted by: <a href="{{ url_for('submitted_by', username=site.submitted_by.username)}}">{{ site.submitted_by.username }}</a> at {{ site.submitted_at|format_datetime }}</li>
       </div>
     </ul>
   </div>
 
-  <div class="span3">
-    <ul class="inline">
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-      <li><a href="#">tag</a></li>
-    </ul>
-  </div>
+  <!--<div class="span3">-->
+    <!--<ul class="inline">-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+      <!--<li><a href="#">tag</a></li>-->
+    <!--</ul>-->
+  <!--</div>-->
 
 </div>
 {% endblock %}
