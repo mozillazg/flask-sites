@@ -4,7 +4,6 @@
 
 from flask import request
 from flask import session
-from flask import g
 from flask import redirect
 from flask import url_for
 from flask import abort
@@ -79,16 +78,18 @@ def add_site():
         tags_names = request.form.get('tags', '').split(',')
         tags_names = filter(lambda s: s, [tag.strip() for tag in tags_names])
 
-        # Add site info to db
-        site = Site(title=title, website=website, description=description,
-                    source_url=source_url, submitted_by=session['user'])
-        for tag in map(get_or_create_tag, tags_names):
-            site.tags.append(tag)
-        db.session.add(site)
-        db.session.commit()
+        site = Site.query.filter_by(website=website).first()
+        if site is None:
+            # Add site info to db
+            site = Site(title=title, website=website, description=description,
+                        source_url=source_url, submitted_by=session['user'])
+            for tag in map(get_or_create_tag, tags_names):
+                site.tags.append(tag)
+            db.session.add(site)
+            db.session.commit()
+            flash('New site was successfully added!')
 
-        flash('New site was successfully added!')
-        return redirect('/')
+        return redirect(url_for('show_site', site_id=site.id))
     else:
         return render_template('add_site.html', error=None)
 
@@ -98,7 +99,6 @@ def add_site():
 def all_sites(mine=False, username=None, keyword=None,
               tag_name=None, opensource=False):
     sites = None
-    count = 0
 
     try:
         page = int(request.args.get('page', 1))
@@ -144,7 +144,8 @@ def all_sites(mine=False, username=None, keyword=None,
     pagination = Pagination(page=page, total=sites.count(), per_page=2)
     sites = sites.paginate(page, per_page=2, error_out=False)
 
-    return render_template('index.html', sites=sites, pagination=pagination)
+    return render_template('index.html', sites=sites, pagination=pagination,
+                           keyword=keyword)
 
 
 @app.route('/mine/')
