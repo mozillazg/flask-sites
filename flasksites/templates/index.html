@@ -1,11 +1,46 @@
 {% extends "layout.html" %}
 
 
+{% block title %}
+  {% if mine %}
+  Sites Submitted By You :: {{ super() }}
+  {% elif username %}
+  Sites Submitted By {{ username }} :: {{ super() }}
+  {% elif tag_name %}
+  Sites Tagged "{{ tag_name }}" :: {{ super() }}
+  {% elif keyword %}
+  Search Results For {{ keyword }} :: {{ super() }}
+  {% elif opensource %}
+  Sites OpenSource :: {{ super() }}
+  {% else %}
+  {{ super() }}
+  {% endif %}
+{% endblock %}
+
+
 {% block notice %}
   <div class="alert">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Warning!</strong> Best check yourself, you're not looking too good.
   </div>
+{% endblock %}
+
+
+{% block breadcrumb %}
+  <li><a href="/">Home</a><span class="divider">/</span></li>
+  {% if mine %}
+  <li class="active">Sites Submitted by you</li>
+  {% elif username %}
+  <li class="active">Sites Submitted By {{ username }}</li>
+  {% elif tag_name %}
+  <li class="active">Sites Tagged "{{ tag_name }}"</li>
+  {% elif keyword %}
+  <li class="active">Search Results For {{ keyword }}</li>
+  {% elif opensource %}
+  <li class="active">Sites OpenSource</li>
+  {% else %}
+  {{ super() }}
+  {% endif %}
 {% endblock %}
 
 

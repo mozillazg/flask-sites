@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-  Submit site :: {{ super() }}
+  Submit An Site :: {{ super() }}
 {% endblock %}
 
 
 {% block breadcrumb %}
-  <li><a href="index.html">Home</a><span class="divider">/</span></li><li class="active">Submit site</li>
+  <li><a href="index.html">Home</a><span class="divider">/</span></li><li class="active">Submit An Site</li>
 {% endblock %}
 
 
@@ -40,6 +40,14 @@
           <div class="controls">
             <input type="text" class="input-xlarge" id="site_tags" name="tags">
             <p class="help-block">Separate tags with comma</p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="source_code">Source Code(optional):</label>
+          <div class="controls">
+            <input type="url" class="input-xlarge" id="source_code" name="source_url">
+            <!--<p class="help-block">Is this site opensource?</p>-->
+            <p class="help-block">Source Code URL(e.g. https://github.com/mozillazg/flask-sites)</p>
           </div>
         </div>
       </div>

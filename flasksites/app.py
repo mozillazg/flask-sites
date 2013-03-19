@@ -113,7 +113,8 @@ def all_sites(mine=False, username=None, keyword=None,
         page = 1
 
     if mine:
-        query = Site.query.filter_by(submitted_by=g.user)
+        user = User.query.filter_by(id=session.get('id')).first()
+        query = Site.query.filter_by(submitted_by=user)
     elif username:
         author = User.query.filter_by(username=username).first()
         sites = author.sites
@@ -152,7 +153,8 @@ def all_sites(mine=False, username=None, keyword=None,
     sites = sites.paginate(page, per_page=6, error_out=False)
 
     return render_template('index.html', sites=sites, pagination=pagination,
-                           keyword=keyword)
+                           keyword=keyword, mine=mine, tag_name=tag_name,
+                           opensource=opensource, username=username)
 
 
 @app.route('/mine/')
