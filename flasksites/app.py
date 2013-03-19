@@ -9,6 +9,7 @@ from flask import url_for
 from flask import abort
 from flask import render_template
 from flask import flash
+from flask import g
 from flask.ext.paginate import Pagination
 from sqlalchemy import or_
 
@@ -25,6 +26,11 @@ from utils import format_datetime_filter
 app.jinja_env.filters['thumbnail'] = thumbnail_filter
 app.jinja_env.filters['shorter_url'] = shorter_url_filter
 app.jinja_env.filters['format_datetime'] = format_datetime_filter
+
+
+@app.before_request
+def before_request():
+    g.user = User.query.filter_by(id=session.get('user_id')).first()
 
 
 @app.route('/account/register', methods=['GET', 'POST'])
@@ -58,7 +64,7 @@ def login():
             error = 'Invalid email or password'
         else:
             session['logged_in'] = True
-            session['user'] = user
+            session['user_id'] = user.id
             flash('You were logged in')
             return redirect('/')
     return render_template('login.html', error=error)
@@ -69,6 +75,7 @@ def add_site():
     if not session.get('logged_in'):
         abort(401)
 
+    user = User.query.filter_by(id=session.get('id')).first()
     error = None
     if request.method == 'POST':
         title = request.form.get('title', '')
@@ -82,7 +89,7 @@ def add_site():
         if site is None:
             # Add site info to db
             site = Site(title=title, website=website, description=description,
-                        source_url=source_url, submitted_by=session['user'])
+                        source_url=source_url, submitted_by=user)
             for tag in map(get_or_create_tag, tags_names):
                 site.tags.append(tag)
             db.session.add(site)
@@ -106,7 +113,7 @@ def all_sites(mine=False, username=None, keyword=None,
         page = 1
 
     if mine:
-        query = Site.query.filter_by(submitted_by=session['user'])
+        query = Site.query.filter_by(submitted_by=g.user)
     elif username:
         author = User.query.filter_by(username=username).first()
         sites = author.sites
@@ -141,8 +148,8 @@ def all_sites(mine=False, username=None, keyword=None,
     if sites is None:
         sites = query.order_by(Site.submitted_at.desc())
 
-    pagination = Pagination(page=page, total=sites.count(), per_page=2)
-    sites = sites.paginate(page, per_page=2, error_out=False)
+    pagination = Pagination(page=page, total=sites.count(), per_page=6)
+    sites = sites.paginate(page, per_page=6, error_out=False)
 
     return render_template('index.html', sites=sites, pagination=pagination,
                            keyword=keyword)
@@ -200,7 +207,7 @@ def all_tags():
 def preference():
     if not session.get('logged_in'):
         abort(401)
-    user = session.get('user')
+    user = User.query.filter_by(id=session.get('user_id')).first()
 
     if request.method == 'POST':
         email = request.form.get('email')
@@ -213,7 +220,7 @@ def preference():
             flash('error')
         else:
             if email != user.email:
-                if User.filter_by(email=email).first() is not None:
+                if User.query.filter_by(email=email).first() is not None:
                     flash('error')
                 else:
                     user.email = email
@@ -227,7 +234,7 @@ def preference():
 @app.route('/account/logout')
 def logout():
     session.pop('logged_in', None)
-    session.pop('user', None)
+    del g.user
     flash('You were logged out')
     return redirect('/')
 

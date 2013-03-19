@@ -10,6 +10,15 @@
   <li class="active">Account Setting</li>
 {% endblock %}
 
+{% block alert %}
+  {% for message in get_flashed_messages() %}
+    <div class="alert">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endblock %}
+
 
 {% block main %}
 <form class="form-horizontal" action="" method="post">

@@ -45,7 +45,7 @@
           <ul class="nav pull-right">
           {% if session.logged_in %}
             <li><a href="{{ url_for('add_site') }}">Submit</a></li>
-            <li><a href="{{ url_for('mine') }}">{{ session.user.username }}</a></li>
+            <li><a href="{{ url_for('mine') }}">{{ g.user.username }}</a></li>
             <li><a href="{{ url_for('preference') }}">Perference</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
           {% else %}
