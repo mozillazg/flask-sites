@@ -75,7 +75,7 @@ def add_site():
     if not session.get('logged_in'):
         abort(401)
 
-    user = User.query.filter_by(id=session.get('id')).first()
+    user = User.query.filter_by(id=session.get('user_id')).first()
     error = None
     if request.method == 'POST':
         title = request.form.get('title', '')
@@ -94,7 +94,7 @@ def add_site():
                 site.tags.append(tag)
             db.session.add(site)
             db.session.commit()
-            flash('New site was successfully added!')
+            # flash('New site was successfully added!')
 
         return redirect(url_for('show_site', site_id=site.id))
     else:
