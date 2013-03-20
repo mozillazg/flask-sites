@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from random import choice
+import hashlib
 
 from settings import db
 
@@ -11,14 +13,23 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+
     is_admin = db.Column(db.Boolean, default=False)
+    token = db.Column(db.String(16))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
     sites = db.relationship('Site', backref='submitted_by', lazy='dynamic')
 
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
         self.password = password
+
+    def create_token(length=16):
+        chars = ('0123456789'
+                 'abcdefghijklmnopqrstuvwxyz'
+                 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+        salt = ''.join([choice(chars) for i in range(length)])
 
     def __repr__(self):
         return '<User %r>' % self.username
