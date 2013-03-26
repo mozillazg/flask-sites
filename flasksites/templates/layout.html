@@ -43,10 +43,10 @@
             </li>
           </ul>
           <ul class="nav pull-right">
-          {% if session.logged_in %}
+          {% if current_user.is_authenticated() %}
             <li><a href="{{ url_for('add_site') }}">Submit</a></li>
-            <li><a href="{{ url_for('mine') }}">{{ g.user.username }}</a></li>
-            <li><a href="{{ url_for('preference') }}">Perference</a></li>
+            <li><a href="{{ url_for('mine') }}">{{ current_user.username }}</a></li>
+            <li><a href="{{ url_for('settings') }}">Perference</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
           {% else %}
             <li><a href="{{ url_for('register') }}">Create Account</a></li>
@@ -68,8 +68,14 @@
       {% endblock %}
       </ul>
 
-    {% block alert %}
-    {% endblock %}
+      {% block alert %}
+        {% for message in get_flashed_messages() %}
+          <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endblock %}
 
       <div id="main" class="container">
         {% block main %}

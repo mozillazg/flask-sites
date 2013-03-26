@@ -78,6 +78,18 @@ class User(db.Model):
         verify = hashlib.sha1(passwd).hexdigest()
         return verify == hsh
 
+    def get_id(self):
+        return unicode(self.id)
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
+
 
 tags = db.Table(
     'tags',
