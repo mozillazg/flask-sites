@@ -101,7 +101,7 @@ tags = db.Table(
 class Site(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
-    website = db.Column(db.String(260), unique=True, nullable=False)
+    website = db.Column(db.String(260), nullable=False)
     description = db.Column(db.Text)
     language = db.Column(db.String(50), default='English')
     tags = db.relationship('Tag', secondary=tags, backref=db.backref('sites',

@@ -3,11 +3,13 @@
 
 from flask import request, redirect, url_for  # , abort, session
 from flask import render_template, flash  # , g
+from werkzeug.contrib.fixers import ProxyFix
 
 from flask.ext.paginate import Pagination
 from flask.ext.login import LoginManager, login_required, login_user
 from flask.ext.login import logout_user, current_user
 from sqlalchemy import or_
+from sqlalchemy.exc import SQLAlchemyError
 
 from settings import db, app
 from models import User, Site, Tag
@@ -102,7 +104,9 @@ def add_site():
                     site.tags.append(tag)
                 db.session.add(site)
                 db.session.commit()
-                # flash('New site was successfully added!')
+                flash('Site submitted successfully!')
+            else:
+                flash('This site already submitted!')
             return redirect(url_for('show_site', site_id=site.id))
     return render_template('add_site.html', error=error)
 
@@ -233,6 +237,8 @@ def logout():
     logout_user()
     flash('You were logged out!')
     return redirect(url_for('index'))
+
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     app.run()

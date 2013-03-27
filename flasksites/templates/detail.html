@@ -9,6 +9,23 @@
   <li><a href="{{ url_for('index') }}">Home</a><span class="divider">/</span></li><li class="active">{{ site.website|shorter_url }}</li>
 {% endblock %}
 
+
+{% block alert %}
+  {% for message in get_flashed_messages() %}
+    <div class="alert">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+  {% endfor %}
+  {% if error %}
+    <div class="alert alert-error">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ error }}
+    </div>
+  {% endif %}
+{% endblock %}
+
+
 {% block main %}
 <div class="row">
   <div class="span12">
