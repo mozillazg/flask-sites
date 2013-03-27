@@ -25,6 +25,15 @@
         min-height: 300px;
         max-height: 300px;
       }
+      .form-center .control-group {
+        margin-left: auto;
+        margin-right: auto;
+        width: 600px;
+      }
+      .form-center .form-actions {
+        padding-left: 350px;
+        // margin-right: auto;
+      }
     </style>
   </head>
   <body style="padding-top:60px;" data-offset="50">
@@ -83,9 +92,9 @@
 
 
   {% block js %}
-    <script src="/static/js/jquery-1.9.1.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/holder.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/holder.js') }}"></script>
   {% endblock %}
 
 

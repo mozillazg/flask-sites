@@ -70,7 +70,8 @@
           <div class="thumbnail">
             <h5>{{ site.title }}</h5>
             <a href="{{ url_for('show_site', site_id=site.id) }}" class="">
-              <img src="{{ site.website|thumbnail }}" data-src="holder.js/350x240">
+              <img src="{{ site.website|thumbnail }}" data-src="holder.js/290x218" 
+              onerror=this.src="{{ url_for('static', filename='img/290x218.png') }}">
             </a>
             <p>{{ site.submitted_at|format_datetime }}</p>
           </div>
@@ -80,27 +81,6 @@
       {{ pagination.links|safe }}
 
     </div>
-
-  <!--<div class="span2">-->
-    <!--<ul class="inline">-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-      <!--<li><a href="#">tag</a></li>-->
-    <!--</ul>-->
-  <!--</div>-->
 
   </div>
 {% endblock %}

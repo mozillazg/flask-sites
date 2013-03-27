@@ -11,12 +11,10 @@
 
 
 {% block main %}
-    <form class="form-horizontal" action="" method="post">
+    <form class="form-horizontal form-center" action="" method="post">
 
       <fieldset>
         <legend>Base info</legend>
-<div class="row">
-  <div class="span8 offset2">
         <div class="control-group">
           <label class="control-label" for="site_title">Site title:</label>
           <div class="controls">
@@ -46,25 +44,15 @@
           <label class="control-label" for="source_code">Source Code(optional):</label>
           <div class="controls">
             <input type="url" class="input-xlarge" id="source_code" name="source_url">
-            <!--<p class="help-block">Is this site opensource?</p>-->
             <p class="help-block">Source Code URL(e.g. https://github.com/mozillazg/flask-sites)</p>
           </div>
-        </div>
       </div>
-    </div>
-        <!--</fieldset>-->
-      <!--<fieldset>-->
-        <!--<legend>Other info</legend>-->
 
         <div class="form-actions">
-      <div class="row">
-        <div class="span6 offset2">
           <!--<button type="submit" class="btn btn-primary pull-right">Create a account</button>-->
           <button type="submit" class="btn btn-primary">Submit an site</button>
           <!--<button type="submit" class="btn">Cancel</button>-->
         </div>
-      </div>
-    </div>
       </fieldset>
     </form>
     </div>
