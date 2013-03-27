@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import request, session, redirect, url_for, abort
-from flask import render_template, flash, g
+from flask import request, redirect, url_for  # , abort, session
+from flask import render_template, flash  # , g
 
 from flask.ext.paginate import Pagination
 from flask.ext.login import LoginManager, login_required, login_user
@@ -19,7 +19,7 @@ app.jinja_env.filters['thumbnail'] = thumbnail_filter
 app.jinja_env.filters['shorter_url'] = shorter_url_filter
 app.jinja_env.filters['format_datetime'] = format_datetime_filter
 login_manager = LoginManager()
-login_manager.setup_app(app)
+login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
@@ -107,8 +107,8 @@ def add_site():
     return render_template('add_site.html', error=error)
 
 
+# @app.route('/sites/')
 @app.route('/')
-@app.route('/sites/')
 def index(mine=False, username=None, keyword=None,
           tag_name=None, opensource=False):
     sites = None
@@ -219,9 +219,9 @@ def settings():
                     db.session.commit()
                     flash('Email address update successfully!')
 
-        if confirm_password and confirm_password != password:
+        if confirm_password != password:
             flash('Please confirm password!')
-        else:
+        elif confirm_password and password:
             set_password(current_user, password)
             flash('Password update successfully!')
     return render_template('settings.html', user=current_user)

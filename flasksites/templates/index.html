@@ -18,28 +18,45 @@
 {% endblock %}
 
 
-{% block notice %}
+{#% block notice %}
   <div class="alert">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Warning!</strong> Best check yourself, you're not looking too good.
   </div>
+{% endblock %#}
+
+{% block alert %}
+  <div class="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    Collecting sites powered by Flask.
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class="alert">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+  {% endfor %}
 {% endblock %}
 
 
 {% block breadcrumb %}
-  <li><a href="/">Home</a><span class="divider">/</span></li>
-  {% if mine %}
-  <li class="active">Sites Submitted by you</li>
-  {% elif username %}
-  <li class="active">Sites Submitted By {{ username }}</li>
-  {% elif tag_name %}
-  <li class="active">Sites Tagged "{{ tag_name }}"</li>
-  {% elif keyword %}
-  <li class="active">Search Results For {{ keyword }}</li>
-  {% elif opensource %}
-  <li class="active">Sites OpenSource</li>
+  {% if request.path == url_for('index') %}
+    {{ super() }}
   {% else %}
-  {{ super() }}
+    <li><a href="{{ url_for('index') }}">Home</a><span class="divider">/</span></li>
+    {% if mine %}
+    <li class="active">Sites Submitted by you</li>
+    {% elif username %}
+    <li class="active">Sites Submitted By {{ username }}</li>
+    {% elif tag_name %}
+    <li class="active">Sites Tagged "{{ tag_name }}"</li>
+    {% elif keyword %}
+    <li class="active">Search Results For {{ keyword }}</li>
+    {% elif opensource %}
+    <li class="active">Sites OpenSource</li>
+    {% else %}
+    {{ super() }}
+    {% endif %}
   {% endif %}
 {% endblock %}
 

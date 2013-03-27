@@ -4,6 +4,9 @@
     <title>{% block title %}FlaskSites{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block site_description %}
+    <meta name="description" content="Collecting sites powered by Flask.">
+  {% endblock %}
   {% block css %}
     <!-- Bootstrap -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -69,12 +72,6 @@
       </ul>
 
       {% block alert %}
-        {% for message in get_flashed_messages() %}
-          <div class="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message }}
-          </div>
-        {% endfor %}
       {% endblock %}
 
       <div id="main" class="container">
@@ -96,10 +93,12 @@
   <footer class="footer">
   {% block footer %}
     <div class="container">
-      <ul class="inline">
-        <li>About</li>
-        <li><a href="https://github.com/mozillazg/flask-sites">Source Code</a></li>
-      </ul>
+      <div class="span4 offset4">
+        <ul class="inline">
+          <li>About</li>
+          <li><a href="https://github.com/mozillazg/flask-sites">Source Code</a></li>
+        </ul>
+      </div>
     </div>
   {% endblock %}
   </footer>
