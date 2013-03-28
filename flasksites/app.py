@@ -85,7 +85,7 @@ def add_site():
     error = None
     if request.method == 'POST':
         title = request.form.get('title', '')
-        website = request.form.get('url', '')
+        website = request.form.get('url', '').strip()
         description = request.form.get('description', '')
         source_url = request.form.get('source_url', '')
         tags_names = request.form.get('tags', '').split(',')

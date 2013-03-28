@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import re
+
 from settings import db
 from models import Tag
 from models import User
@@ -26,7 +28,7 @@ def thumbnail_filter(url, width=1024, height=768, selector='body'):
 
 
 def shorter_url_filter(url):
-    url = url.strip('http://').strip('https://')
+    url = re.sub(r'^https?://', '', url)
     return url
 
 
