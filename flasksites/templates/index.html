@@ -30,11 +30,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     Collecting sites powered by Flask.
   </div>
-  {% for message in get_flashed_messages() %}
-    <div class="alert">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      {{ message }}
-    </div>
+  {{ super() }}
   {% endfor %}
 {% endblock %}
 
@@ -66,7 +62,7 @@
     <div class="span12">
       <ul class="thumbnails">
       {% for site in sites.items %}
-        <li class="span4">
+        <li class="span4 small-thumbnail">
           <div class="thumbnail">
             <h5>{{ site.title }}</h5>
             <a href="{{ url_for('show_site', site_id=site.id) }}" class="">

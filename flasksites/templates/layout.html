@@ -19,11 +19,19 @@
         //border: solid #EEE 1px;
         //padding-top: 20px;
       }
-      .span12 .thumbnails .span4 {
-        min-width: 300px;
-        max-width: 300px;
-        min-height: 300px;
+      //.span12 .thumbnails .span4 {
+      //  min-width: 300px;
+      //  max-width: 300px;
+      //  min-height: 300px;
+      //  max-height: 300px;
+      //}
+      .small-thumbnail {
         max-height: 300px;
+        overflow: hidden;
+      }
+      .large-thumbnail {
+        max-height: 700px;
+        overflow: hidden;
       }
       .form-center .control-group {
         margin-left: auto;
@@ -81,6 +89,12 @@
       </ul>
 
       {% block alert %}
+        {% for message in get_flashed_messages() %}
+          <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+          </div>
+        {% endfor %}
       {% endblock %}
 
       <div id="main" class="container">

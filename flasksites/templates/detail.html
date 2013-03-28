@@ -11,12 +11,7 @@
 
 
 {% block alert %}
-  {% for message in get_flashed_messages() %}
-    <div class="alert">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      {{ message }}
-    </div>
-  {% endfor %}
+  {{ super() }}
   {% if error %}
     <div class="alert alert-error">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -32,7 +27,7 @@
     <ul class="unstyled">
       <li><h1>{{ site.title }}</h1></li>
       <li><p class="lead">{{ site.description }}</p></li>
-      <li><p><a href="{{ site.website }}" class="thumbnail">
+      <li class="large-thumbnail"><p><a href="{{ site.website }}" class="thumbnail">
             <img src="{{ site.website|thumbnail }}" data-src="holder.js/930x698"
             onerror=this.src="{{ url_for('static', filename='img/930x698.png') }}">
         </a></p></li>
