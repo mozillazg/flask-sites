@@ -27,6 +27,7 @@
       //}
       .small-thumbnail {
         max-height: 300px;
+        min-height: 300px;
         overflow: hidden;
       }
       .large-thumbnail {
@@ -108,7 +109,7 @@
   {% block js %}
     <script src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/holder.js') }}"></script>
+    <!--<script src="{{ url_for('static', filename='js/holder.js') }}"></script>-->
   {% endblock %}
 
 
