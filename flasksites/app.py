@@ -9,17 +9,20 @@ from flask.ext.paginate import Pagination
 from flask.ext.login import LoginManager, login_required, login_user
 from flask.ext.login import logout_user, current_user
 from sqlalchemy import or_
-from sqlalchemy.exc import SQLAlchemyError
+# from sqlalchemy.exc import SQLAlchemyError
 
 from settings import db, app
 from models import User, Site, Tag
-from utils import get_or_create_tag, thumbnail_filter, shorter_url_filter
-from utils import format_datetime_filter, create_user, set_password
+from utils import get_or_create_tag, create_user, set_password
+from utils import thumbnail_filter, shorter_url_filter, format_datetime_filter
+from utils import markdown_filter
 from utils import auth_user
 
 app.jinja_env.filters['thumbnail'] = thumbnail_filter
 app.jinja_env.filters['shorter_url'] = shorter_url_filter
 app.jinja_env.filters['format_datetime'] = format_datetime_filter
+app.jinja_env.filters['markdown'] = markdown_filter
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'

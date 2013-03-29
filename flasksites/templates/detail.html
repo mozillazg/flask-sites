@@ -26,7 +26,7 @@
   <div class="span12">
     <ul class="unstyled">
       <li><h1>{{ site.title }}</h1></li>
-      <li><p class="lead">{{ site.description }}</p></li>
+      <li><p class="lead">{{ site.description|markdown("escape")|safe }}</p></li>
       <li class="large-thumbnail"><p><a href="{{ site.website }}" class="thumbnail">
             <img src="{{ site.website|thumbnail(size='930x698') }}" data-src=""
             onerror=this.src="{{ url_for('static', filename='img/930x698.png') }}">
