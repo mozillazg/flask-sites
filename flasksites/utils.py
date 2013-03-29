@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from markdown2 import markdown
 
 from settings import db
 from models import Tag
@@ -21,10 +22,13 @@ def get_or_create_tag(tag_name):
     return tag
 
 
-def thumbnail_filter(url, width=1024, height=768, selector='body'):
-    api = 'http://screamshot-demo.3sd.me/capture/?url=%s'
-    api += '&width=%s&height=%s&selector=%s'
-    return api % (url, width, height, selector)
+# def thumbnail_filter(url, width=1024, height=768, selector='body'):
+    # api = 'http://screamshot-demo.3sd.me/capture/?url=%s'
+    # api += '&width=%s&height=%s&selector=%s'
+    # return api % (url, width, height, selector)
+def thumbnail_filter(url, size='', format='png'):
+    api = 'http://api.snapito.com/web/abc123/%s?url=%s&type=%s'
+    return api % (size, url, format)
 
 
 def shorter_url_filter(url):
@@ -34,6 +38,14 @@ def shorter_url_filter(url):
 
 def format_datetime_filter(value, format='%b %d, %Y'):
     return value.strftime(format)
+
+
+def markdown_filter(text, safe_mode=None):
+    if safe_mode == 'safe':
+        safe_mode = 'replace'  # True
+    elif safe_mode:
+        safe_mode = 'escape'
+    return markdown(text, safe_mode=safe_mode)
 
 
 def create_user(username, email, password):
