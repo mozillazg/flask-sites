@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import urllib
 from markdown2 import markdown
 
 from settings import db
@@ -26,9 +27,10 @@ def get_or_create_tag(tag_name):
     # api = 'http://screamshot-demo.3sd.me/capture/?url=%s'
     # api += '&width=%s&height=%s&selector=%s'
     # return api % (url, width, height, selector)
-def thumbnail_filter(url, size='', format='png'):
-    api = 'http://api.snapito.com/web/abc123/%s?url=%s&type=%s'
-    return api % (size, url, format)
+def thumbnail_filter(url, size='full', format='png'):
+    parameters = urllib.urlencode({'url': url, 'type': format})
+    api = 'http://api.snapito.com/web/abc123/%s?%s'
+    return api % (size, parameters)
 
 
 def shorter_url_filter(url):
