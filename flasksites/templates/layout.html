@@ -15,20 +15,23 @@
       .navbar-fixed-top {
         margin-bottom: 20px;
       }
-      #main {
-        //border: solid #EEE 1px;
-        //padding-top: 20px;
-      }
-      //.span12 .thumbnails .span4 {
-      //  min-width: 300px;
-      //  max-width: 300px;
-      //  min-height: 300px;
-      //  max-height: 300px;
-      //}
       .small-thumbnail {
-        max-height: 300px;
-        min-height: 300px;
+        max-height: 310px;
+        min-height: 310px;
         overflow: hidden;
+        position:relative;
+      }
+      .small-thumbnail img {
+        max-height: 290px;
+        overflow: hidden;
+        position: absolute;
+      }
+      .small-thumbnail .datetime {
+        position: absolute;
+        top: 285px;
+        left: 0px;
+        z-index: 999;
+        width: 300px;
       }
       .large-thumbnail {
         max-height: 700px;

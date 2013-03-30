@@ -64,11 +64,15 @@
       {% with url_show=url_for('show_site', site_id=site.id) %}
         <li class="span4">
           <div class="thumbnail small-thumbnail">
-            <h5><a class="text-info" href="{{ url_show }}">{{ site.title|truncate(25, True)|title }}</a></h5>
-            <a href="{{ url_show }}" class="">
-              <img src="{{ site.website|thumbnail(size='290x218') }}" data-src="">
-            </a>
-            <!--<p>{{ site.submitted_at|format_datetime }}</p>-->
+            <div class="title">
+              <h5><a class="text-info" href="{{ url_show }}">{{ site.title|truncate(25, True)|title }}</a></h5>
+            </div>
+            <div class="">
+              <a href="{{ url_show }}" class="">
+                <img alt="thumbnail" src="{{ site.website|thumbnail(size='290x218') }}" data-src="">
+              </a>
+            </div>
+            <div class="datetime well well-small">{{ site.submitted_at|format_datetime }}</div>
           </div>
         </li>
       {% endwith %}
