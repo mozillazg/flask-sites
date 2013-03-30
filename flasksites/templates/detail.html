@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-{{ site.title }} :: {{ super() }}
+{{ site.title|truncate(25, True) }} :: {{ super() }}
 {% endblock %}
 
 
@@ -25,23 +25,24 @@
 <div class="row">
   <div class="span12">
     <ul class="unstyled">
-      <li><h1>{{ site.title }}</h1></li>
+      <li><h1>{{ site.title|wordwrap(40)|title }}</h1></li>
       <li><p class="lead">{{ site.description|markdown("escape")|safe }}</p></li>
-      <li class="large-thumbnail"><p><a href="{{ site.website }}" class="thumbnail">
-            <img src="{{ site.website|thumbnail(size='930x698') }}" data-src=""
-            onerror=this.src="{{ url_for('static', filename='img/930x698.png') }}">
-        </a></p></li>
+      <li class=""><div class="thumbnail large-thumbnail">
+          <a href="{{ site.website }}">
+            <img src="{{ site.website|thumbnail(size='930x698') }}" data-src="">
+      </a>
+      </div></li>
 
       <div class="clearfix"></div>
       <div class="well">
-        <li>URL: {{ site.website|urlize }}</li>
-        <li>Tags:
+        <li><strong>URL</strong>: {{ site.website|urlize }}</li>
+        <li><strong>Tags</strong>:
           {% for tag in site.tags %}
           <a href="{{ url_for('tagged', tag_name=tag.name) }}">#{{ tag.name }}</a>
           {% endfor %}
         </li>
-        <li>Source Code: {{ site.source_url|urlize }}</li>
-        <li>Submitted by: <a href="{{ url_for('submitted_by', username=site.submitted_by.username)}}">{{ site.submitted_by.username }}</a> at {{ site.submitted_at|format_datetime }}</li>
+        <li><strong>Source Code</strong>: {{ site.source_url|urlize }}</li>
+        <li><strong>Submitted by</strong>: <a href="{{ url_for('submitted_by', username=site.submitted_by.username)}}">{{ site.submitted_by.username }}</a> at {{ site.submitted_at|format_datetime }}</li>
       </div>
     </ul>
   </div>

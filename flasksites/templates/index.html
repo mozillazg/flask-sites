@@ -61,16 +61,17 @@
     <div class="span12">
       <ul class="thumbnails">
       {% for site in sites.items %}
-        <li class="span4 small-thumbnail">
-          <div class="thumbnail">
-            <h5>{{ site.title }}</h5>
-            <a href="{{ url_for('show_site', site_id=site.id) }}" class="">
-              <img src="{{ site.website|thumbnail(size='290x218') }}" data-src=""
-              onerror=this.src="{{ url_for('static', filename='img/290x218.png') }}">
+      {% with url_show=url_for('show_site', site_id=site.id) %}
+        <li class="span4">
+          <div class="thumbnail small-thumbnail">
+            <h5><a class="text-info" href="{{ url_show }}">{{ site.title|truncate(25, True)|title }}</a></h5>
+            <a href="{{ url_show }}" class="">
+              <img src="{{ site.website|thumbnail(size='290x218') }}" data-src="">
             </a>
             <!--<p>{{ site.submitted_at|format_datetime }}</p>-->
           </div>
         </li>
+      {% endwith %}
       {% endfor %}
       </ul>
       {{ pagination.links|safe }}
