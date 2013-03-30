@@ -16,6 +16,7 @@
         margin-bottom: 20px;
       }
       .small-thumbnail {
+        max-width: 290px;
         max-height: 310px;
         min-height: 310px;
         overflow: hidden;
@@ -34,6 +35,7 @@
         width: 300px;
       }
       .large-thumbnail {
+        max-width: 930px;
         max-height: 700px;
         overflow: hidden;
       }
@@ -59,7 +61,7 @@
           <ul class="nav">
             <li {% if request.path == url_for('all_tags') %}class="active" {% endif %}><a href="{{ url_for('all_tags') }}">Tags</a></li>
             <li {% if request.path == url_for('opensource') %}class="active" {% endif %}><a href="{{ url_for('opensource') }}"">OpenSource</a></li>
-            <li><a href="">About</a><li>
+            <li><a href="#">About</a><li>
             <li>
               <form class="navbar-search pull-left" action="{{ url_for('search') }}" method="get">
                 <input placeholder="Search Sites" name="q" type="text" class="search-query" {% if keyword %}value="{{ keyword}}"{% endif %}>
@@ -94,7 +96,7 @@
 
       {% block alert %}
         {% for message in get_flashed_messages() %}
-          <div class="alert">
+          <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ message }}
           </div>
@@ -120,7 +122,7 @@
   <footer class="footer">
   {% block footer %}
     <div class="container">
-      <div class="span4 offset4">
+      <div class="text-center">
         <ul class="inline">
           <li>About</li>
           <li><a href="https://github.com/mozillazg/flask-sites">Source Code</a></li>

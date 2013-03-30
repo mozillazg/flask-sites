@@ -16,12 +16,13 @@ from models import User, Site, Tag
 from utils import get_or_create_tag, create_user, set_password
 from utils import thumbnail_filter, shorter_url_filter, format_datetime_filter
 from utils import markdown_filter
-from utils import auth_user
+from utils import auth_user, pretty_url
 
 app.jinja_env.filters['thumbnail'] = thumbnail_filter
 app.jinja_env.filters['shorter_url'] = shorter_url_filter
 app.jinja_env.filters['format_datetime'] = format_datetime_filter
 app.jinja_env.filters['markdown'] = markdown_filter
+app.jinja_env.filters['pretty_url'] = pretty_url
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -54,7 +55,7 @@ def register():
             error = 'Please confirm password! '
         else:
             create_user(username, email, password)
-            flash('Signup successfully')
+            flash('Create Account successfully')
             return redirect(url_for('login'))
     return render_template('register.html', error=error)
 
@@ -109,7 +110,7 @@ def add_site():
                 db.session.commit()
                 flash('Site submitted successfully!')
             else:
-                flash('This site already submitted!')
+                flash('This site already submitted by someone!')
             return redirect(url_for('show_site', site_id=site.id))
     return render_template('add_site.html', error=error)
 

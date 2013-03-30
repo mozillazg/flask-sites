@@ -34,8 +34,11 @@ def thumbnail_filter(url, size='full', format='png'):
 
 
 def shorter_url_filter(url):
-    url = re.sub(r'^https?://', '', url)
-    return url
+    return pretty_url(re.sub(r'^https?://', '', url))
+
+
+def pretty_url(url):
+    return re.sub(r'(^https?://[^/\.]+\.[a-zA-Z]+)/$', r'\1', url)
 
 
 def format_datetime_filter(value, format='%b %d, %Y'):
