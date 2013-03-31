@@ -55,8 +55,8 @@ def markdown_filter(text, safe_mode=None):
     return markdown(text, safe_mode=safe_mode)
 
 
-def current_link_filter(request, view_name, class_name='active', **values):
-    if request.path == url_for(view_name, **values):
+def current_link_filter(path, view_name, class_name='active', **values):
+    if path == url_for(view_name, **values):
         return class_name
     else:
         return ''
