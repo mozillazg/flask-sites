@@ -59,8 +59,8 @@
 
           <a class="brand" href="/">FlaskSites</a>
           <ul class="nav">
-            <li {% if request.path == url_for('all_tags') %}class="active" {% endif %}><a href="{{ url_for('all_tags') }}">Tags</a></li>
-            <li {% if request.path == url_for('opensource') %}class="active" {% endif %}><a href="{{ url_for('opensource') }}"">OpenSource</a></li>
+            <li class="{{ request.path|current_link('all_tags') }}"><a href="{{ url_for('all_tags') }}">Tags</a></li>
+            <li class="{{ request.path|current_link('opensource') }}"><a href="{{ url_for('opensource') }}"">OpenSource</a></li>
             <li><a href="#">About</a><li>
             <li>
               <form class="navbar-search pull-left" action="{{ url_for('search') }}" method="get">
@@ -70,13 +70,13 @@
           </ul>
           <ul class="nav pull-right">
           {% if current_user.is_authenticated() %}
-            <li {% if request.path == url_for('add_site') %}class="active" {% endif %}><a href="{{ url_for('add_site') }}">Submit</a></li>
-            <li {% if request.path == url_for('mine') %}class="active" {% endif %}><a href="{{ url_for('mine') }}">{{ current_user.username }}</a></li>
-            <li {% if request.path == url_for('settings') %}class="active" {% endif %}><a href="{{ url_for('settings') }}">Perference</a></li>
+          <li class="{{ request.path|current_link('add_site') }}"><a href="{{ url_for('add_site') }}">Submit</a></li>
+            <li class="{{ request.path|current_link('mine') }}"><a href="{{ url_for('mine') }}">{{ current_user.username }}</a></li>
+            <li class="{{ request.path|current_link('settings') }}"><a href="{{ url_for('settings') }}">Perference</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
           {% else %}
-            <li {% if request.path == url_for('register') %}class="active" {% endif %}><a href="{{ url_for('register') }}">Create Account</a></li>
-            <li {% if request.path == url_for('login') %}class="active" {% endif %}><a href="{{ url_for('login') }}">Sign In</a></li>
+            <li class="{{ request.path|current_link('register') }}"><a href="{{ url_for('register') }}">Create Account</a></li>
+            <li class="{{ request.path|current_link('login') }}"><a href="{{ url_for('login') }}">Sign In</a></li>
           {% endif %}
           </ul>
 
