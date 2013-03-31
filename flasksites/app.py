@@ -15,7 +15,7 @@ from settings import db, app
 from models import User, Site, Tag
 from utils import get_or_create_tag, create_user, set_password
 from utils import thumbnail_filter, shorter_url_filter, format_datetime_filter
-from utils import markdown_filter
+from utils import markdown_filter, current_link_filter
 from utils import auth_user, pretty_url
 
 app.jinja_env.filters['thumbnail'] = thumbnail_filter
@@ -23,6 +23,7 @@ app.jinja_env.filters['shorter_url'] = shorter_url_filter
 app.jinja_env.filters['format_datetime'] = format_datetime_filter
 app.jinja_env.filters['markdown'] = markdown_filter
 app.jinja_env.filters['pretty_url'] = pretty_url
+app.jinja_env.filters['current_link'] = current_link_filter
 
 login_manager = LoginManager()
 login_manager.init_app(app)

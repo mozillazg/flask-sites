@@ -5,6 +5,8 @@ import re
 import urllib
 from markdown2 import markdown
 
+from flask import url_for
+
 from settings import db
 from models import Tag
 from models import User
@@ -51,6 +53,13 @@ def markdown_filter(text, safe_mode=None):
     elif safe_mode:
         safe_mode = 'escape'
     return markdown(text, safe_mode=safe_mode)
+
+
+def current_link_filter(request, view_name, class_name='active', **values):
+    if request.path == url_for(view_name, **values):
+        return class_name
+    else:
+        return ''
 
 
 def create_user(username, email, password):
