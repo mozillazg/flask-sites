@@ -46,7 +46,7 @@ def format_datetime_filter(value, format='%b %d, %Y'):
 
 
 def markdown_filter(text, safe_mode=None):
-    if safe_mode == 'safe':
+    if safe_mode == 'safe' or safe_mode == 'replace':
         safe_mode = 'replace'  # True
     elif safe_mode:
         safe_mode = 'escape'
@@ -54,7 +54,8 @@ def markdown_filter(text, safe_mode=None):
 
 
 def create_user(username, email, password):
-    user = User(username=username, email=email, password=password)
+    user = User(username=username.lower(),
+                email=email.lower(), password=password)
     db.session.add(user)
     db.session.commit()
     return user
@@ -68,7 +69,7 @@ def set_password(user, password):
 
 
 def auth_user(email, password):
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email.lower()).first()
     if user is None:
         return None
     else:

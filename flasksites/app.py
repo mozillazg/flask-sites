@@ -44,8 +44,8 @@ def register():
     error = None
 
     if request.method == 'POST':
-        username = request.form.get('username')
-        email = request.form.get('email')
+        username = request.form.get('username').lower()
+        email = request.form.get('email').lower()
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
 
@@ -53,6 +53,10 @@ def register():
             error = 'All label is required!'
         elif password != confirm_password:
             error = 'Please confirm password! '
+        elif User.query.filter_by(username=username).first():
+            error = 'This username has been registered!'
+        elif User.query.filter_by(email=email).first():
+            error = 'This email has been registered!'
         else:
             create_user(username, email, password)
             flash('Create Account successfully')
