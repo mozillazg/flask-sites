@@ -53,7 +53,7 @@
   <body style="padding-top:60px;" data-offset="50">
 
     <!-- navbar -->
-    <header class="navbar navbar-inverse navbar-fixed-top">
+    <header class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
 
@@ -70,13 +70,13 @@
           </ul>
           <ul class="nav pull-right">
           {% if current_user.is_authenticated() %}
-            <li><a href="{{ url_for('add_site') }}">Submit</a></li>
-            <li><a href="{{ url_for('mine') }}">{{ current_user.username }}</a></li>
-            <li><a href="{{ url_for('settings') }}">Perference</a></li>
+            <li {% if request.path == url_for('add_site') %}class="active" {% endif %}><a href="{{ url_for('add_site') }}">Submit</a></li>
+            <li {% if request.path == url_for('mine') %}class="active" {% endif %}><a href="{{ url_for('mine') }}">{{ current_user.username }}</a></li>
+            <li {% if request.path == url_for('settings') %}class="active" {% endif %}><a href="{{ url_for('settings') }}">Perference</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
           {% else %}
-            <li><a href="{{ url_for('register') }}">Create Account</a></li>
-            <li><a href="{{ url_for('login') }}">Sign In</a></li>
+            <li {% if request.path == url_for('register') %}class="active" {% endif %}><a href="{{ url_for('register') }}">Create Account</a></li>
+            <li {% if request.path == url_for('login') %}class="active" {% endif %}><a href="{{ url_for('login') }}">Sign In</a></li>
           {% endif %}
           </ul>
 
